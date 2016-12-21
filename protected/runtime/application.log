@@ -1,0 +1,29 @@
+2016/12/21 11:50:29 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'newblog.tbl_migration' doesn't exist. The SQL statement executed was: SHOW FULL COLUMNS FROM `tbl_migration`.
+2016/12/21 11:56:14 [error] [exception.ParseError] ParseError: syntax error, unexpected ''created_at'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/shubham/Projects/newblog/protected/migrations/m161221_062135_post.php:12
+Stack trace:
+#0 /home/shubham/Projects/yii/framework/cli/commands/MigrateCommand.php(414): MigrateCommand->instantiateMigration('m161221_062135_...')
+#1 /home/shubham/Projects/yii/framework/cli/commands/MigrateCommand.php(109): MigrateCommand->migrateUp('m161221_062135_...')
+#2 [internal function]: MigrateCommand->actionUp(Array)
+#3 /home/shubham/Projects/yii/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#4 /home/shubham/Projects/yii/framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#5 /home/shubham/Projects/yii/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#6 /home/shubham/Projects/yii/framework/base/CApplication.php(185): CConsoleApplication->processRequest()
+#7 /home/shubham/Projects/yii/framework/yiic.php(33): CApplication->run()
+#8 /home/shubham/Projects/newblog/protected/yiic.php(7): require_once('/home/shubham/P...')
+#9 /home/shubham/Projects/newblog/protected/yiic(4): require_once('/home/shubham/P...')
+#10 {main}
+---
+2016/12/21 11:57:16 [error] [exception.ParseError] ParseError: syntax error, unexpected ''created_at'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/shubham/Projects/newblog/protected/migrations/m161221_062135_post.php:12
+Stack trace:
+#0 /home/shubham/Projects/yii/framework/cli/commands/MigrateCommand.php(414): MigrateCommand->instantiateMigration('m161221_062135_...')
+#1 /home/shubham/Projects/yii/framework/cli/commands/MigrateCommand.php(109): MigrateCommand->migrateUp('m161221_062135_...')
+#2 [internal function]: MigrateCommand->actionUp(Array)
+#3 /home/shubham/Projects/yii/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#4 /home/shubham/Projects/yii/framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#5 /home/shubham/Projects/yii/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#6 /home/shubham/Projects/yii/framework/base/CApplication.php(185): CConsoleApplication->processRequest()
+#7 /home/shubham/Projects/yii/framework/yiic.php(33): CApplication->run()
+#8 /home/shubham/Projects/newblog/protected/yiic.php(7): require_once('/home/shubham/P...')
+#9 /home/shubham/Projects/newblog/protected/yiic(4): require_once('/home/shubham/P...')
+#10 {main}
+---
