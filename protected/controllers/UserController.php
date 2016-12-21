@@ -19,15 +19,18 @@ class UserController extends Controller {
     public function actionLogin($id){
     	$user = User::model()->findbyPK($id);
     	if($user!=NULL){
-    		echo CJSON::encode(array('user_name'=>$user->name,'status'=>'SUCCESS'));
+
+            if($user->status ==1){
+            echo CJSON::encode(array('user_name'=>$user->name,'status'=>'SUCCESS'));
+            }
+            else{
+                echo "Account Deactivated";
+            }
     	}
     	else{
     		echo "Account does not exist";
     	}
     }
-
-    
-
 
 
     public function actionProfile($id) {
@@ -45,9 +48,26 @@ class UserController extends Controller {
         $users = User::model()->findAllByAttributes(array('name'=>$name));
         $users_profile = array();
         foreach($users as $user){
+            if($user->status ==1){
             $users_profile[] = array('user_id'=>$user->id, 'user_name'=>$user->name, 'email'=>$user->email);
+            }    
         }
         echo CJSON::encode(array('status'=>'SUCCESS', 'users_profile'=>$users_profile));
+    }
+
+
+    public function actionDelete($id){
+
+      $user = User::model()->findByPk($id);
+      $user->status = 2;
+      $user->save();
+    }
+
+    public function actionRestore($id){
+
+      $user = User::model()->findByPk($id);
+      $user->status = 1;
+      $user->save();
     }
 
 }

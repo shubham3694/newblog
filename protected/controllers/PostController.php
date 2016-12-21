@@ -21,7 +21,10 @@ class PostController extends Controller {
            echo 'This id does not exists';
        }   else {
                 
-                echo CJSON::encode(array('id'=>$view->id,'status'=>'SUCCESS','content'=>$view->content));
+                if($view->status ==1){
+                     echo CJSON::encode(array('id'=>$view->id,'status'=>'SUCCESS','content'=>$view->content));
+                 }
+                
             }
     }
                               //user_id
@@ -30,7 +33,9 @@ class PostController extends Controller {
     	//$posts = Post::model()->findAllByAttributes(array('user_id'=>$id));
     	$posts_data = array();
     	foreach ($posts as $post) {
-    		$posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
+    		if($post->status ==1){
+            $posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
+          }
     	}
     	echo CJSON::encode(array('status'=>'SUCCESS',
     		'posts_data'=>$posts_data,
@@ -41,22 +46,22 @@ class PostController extends Controller {
 
     public function actionSearch($str){
 
-
     	$posts = Post::model()->findAll(array('condition'=>"content LIKE :str", 'params'=>array('str'=>"%$str%")));
-    	
-    	//echo count($posts);
     	$posts_data = array();
         foreach ($posts as $post) {
+
+          if($post->status ==1){
             $posts_data[] = array('id'=>$post->id, 'content'=>$post->content);
+          }
+          else{
+            echo "Post Doesnt exist";
+          }  
         }
         echo CJSON::encode(array('status'=>'SUCCESS',
 
-        		'posts_data'=>$posts_data,
-        	));
-    	
+            'posts_data'=>$posts_data,
+          ));
     }
-
-
 
                                   //post_id
     public function actionComments($id) {
@@ -66,6 +71,31 @@ class PostController extends Controller {
           echo CJSON::encode(array('user_id'=>$comment->user_id, 'content'=>$comment->content));
         }
 
+    }
+
+
+    public function actionDelete($id){
+
+      $post = Post::model()->findByPk($id);
+      $post->status = 2;
+      $post->save();
+    }
+
+    public function actionRestore($id){
+
+      $post = Post::model()->findByPk($id);
+      $post->status = 1;
+      $post->save();
+    }
+
+    public function actionUpdate($str, $id){
+
+      $post = Post::model()->findByPk($id);
+      if($post->status == 1){
+
+        $post->content = $str;
+        $post->save();
+      }
     }
 
 }
