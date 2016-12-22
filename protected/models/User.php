@@ -46,12 +46,12 @@ class User extends CActiveRecord {
 			);
 	}
 
-	public function deactivate($id) {
+	public function deactivate() {
 		$this->status = 2;
 	    $this->save();
 	}
 
-	public function activate($id) {
+	public function activate() {
 		$this->status = 1;
 	    $this->save();
 	}

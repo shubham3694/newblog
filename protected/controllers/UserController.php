@@ -83,12 +83,12 @@ class UserController extends Controller {
 
 
 	public function actionDelete($id) {
-		$this->_user->deactivate($id);
+		$this->_user->deactivate();
 		$this->renderSuccess(array('user_id'=>$this->_user->id, 'Message'=>'User Account Deleted Successfully'));
 	}
 
 	public function actionRestore($id) {
-		$this->_user->activate($id);
+		$this->_user->activate();
 		$this->renderSuccess(array('user_id'=>$this->_user->id, 'Message'=>'User Account Activated Successfully'));
 
 	}
