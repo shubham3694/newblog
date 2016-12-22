@@ -1,31 +1,32 @@
 <?php
 class LikeController extends Controller {
 
-    public function actionLike() {
-        if(isset($_POST['like'])) {
-            $like = Like::create($_POST['like']);
-            if(!$like->errors) {
-                $this->renderSuccess(array('post_id'=>$like->post_id,'user_id'=>$like->user_id));
-            } else {
-                $this->renderError($this->getErrorMessageFromModelErrors($like));
+    public function actionCreate() {
+        if(isset($_POST['Like'])) {
+            $existing_like = Like::model()->findByAttributes(array('user_id'=>$_POST['Like']['user_id'],'post_id'=>$_POST['Like']['post_id']));
+            if(!$existing_like)
+            {
+                $like = Like::create($_POST['Like']);
+                if(!$like->errors) {
+                    $this->renderSuccess(array('post_id'=>$like->post_id,'user_id'=>$like->user_id));
+                }
             }
-        } else {
-            $this->renderError('Please send post data!');
+            else {
+
+                if($existing_like->status == 1) {
+
+                    $existing_like->deactivate();
+                    $this->renderSuccess(array('success'=>"Like removed."));
+                }
+                else if($existing_like->status == 2) {
+
+                    $existing_like->activate();
+                    $this->renderSuccess(array('success'=>"Liked."));
+                }  
+            }
         }
-    }
-
-                            //post_id
-    public function actionCount($id){
-
-        $counts = Like::model()->findAllByAttributes(array('post_id'=>$id));
-        $users_data = array();
-        foreach ($counts as $count) {
-            $users_data[] = array('user_id'=>$count->user_id,'user_name'=>$count->user->name);
+        else {
+            $this->renderError('ERROR.');
         }
-        echo "No. of Likes = ".count($counts)."  "."<br>";
-        echo CJSON::encode(array('status'=>'SUCCESS',
-
-                'users_data'=>$users_data,
-            ));
     }
 }
