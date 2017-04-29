@@ -41,8 +41,8 @@ class UserController extends Controller {
 	}
 
 	public function actionCreate() {
-		if(isset($_POST['new_user'])) {
-			$new_user = User::create($_POST['new_user']);
+		if(isset($_GET['new_user'])) {
+			$new_user = User::create($_GET['new_user']);
 			if(!$new_user->errors) {
 				$this->renderSuccess(array('user_id'=>$new_user->id, 'name'=>$new_user->name, 'password'=>$new_user->password, 'email'=>$new_user->email));
 			} else {

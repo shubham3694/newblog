@@ -39,8 +39,8 @@ class PostController extends Controller {
 
 
 	public function actionCreate() {
-		if(isset($_POST['Post'])) {
-			$post = Post::create($_POST['Post']);
+		if(isset($_GET['Post'])) {
+			$post = Post::create($_GET['Post']);
 			if(!$post->errors) {
 				$this->renderSuccess(array('post_id'=>$post->id,'content'=>$post->content));
 			} else {
