@@ -5,13 +5,11 @@ class PostController extends Controller {
 	public $_post;
 
 	public function filters() {
-		return array(
+		return array_merge(parent::filters(), array(
 			'checkAndSetUser + view, comments, delete, update, topComments, likes',
 			'restoreAccount + restore',
-			);
+		));
 	}
-
-
 
 	public function filterCheckAndSetUser($filterChain) {
 		if(!$_GET['id'])
@@ -27,7 +25,6 @@ class PostController extends Controller {
 
 
 	public function filterRestoreAccount($filterChain) {
-
 		if(!$_GET['id'])
 			$this->renderError("Invalid Data!");
 		else {

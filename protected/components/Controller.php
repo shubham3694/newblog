@@ -1,6 +1,25 @@
 <?php
 class Controller extends CController {
 
+	public $_user;
+
+	public function filters() {
+		return array(
+			'setCurrentUser',
+			'logCurrentUserActivity',
+		);
+	}
+
+	public function filterSetCurrentUser($filterChain) {
+		$this->_user = User::model()->findByPk(3);
+		$filterChain->run();
+	}
+
+	public function filterLogCurrentUserActivity($filterChain) {
+		$this->_user->updateLastRequestAt();
+		$filterChain->run();
+	}
+
 	public function getErrorMessageFromModelErrors($model, $implode_by='<br />') {
 		$messages = array();
 		foreach($model->errors as $error)

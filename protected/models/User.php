@@ -23,9 +23,9 @@ class User extends CActiveRecord {
 	public function rules() {
 		return array(
 			array('name, email, password', 'required'),
-			array('status, created_at, updated_at', 'numerical', 'integerOnly'=>true),
+			array('status, last_request_at, created_at, updated_at', 'numerical', 'integerOnly'=>true),
 			array('name, email, password', 'length', 'max'=>255),
-			);
+		);
 	}
 
 	public function relations() {
@@ -43,7 +43,7 @@ class User extends CActiveRecord {
 		return array(
 			'active'=>array('condition'=>"status = :status_active", 'params'=>array('status_active'=>self::STATUS_ACTIVE)),
 			'deactivated'=>array('condition'=>"status = :status_deactivated", 'params'=>array('status_deactivated'=>self::STATUS_DEACTIVATED)),
-			);
+		);
 	}
 
 	public function deactivate() {
@@ -54,6 +54,10 @@ class User extends CActiveRecord {
 	public function activate() {
 		$this->status = 1;
 	    $this->save();
+	}
+
+	public function updateLastRequestAt() {
+		$this->updateColumns(array('last_request_at'=>time()));
 	}
 
 	public function beforeSave() {
