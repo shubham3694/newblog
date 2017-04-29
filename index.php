@@ -9,7 +9,7 @@ defined('YII_DEBUG') or define('YII_DEBUG',true);
 // specify how many levels of call stack should be shown in each log message
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
-if(isset($_GET['pft'])) {
+if(isset($_GET['show_logs'])) {
 	defined('YII_DEBUG_SHOW_PROFILER') or define('YII_DEBUG_SHOW_PROFILER',true);
 	defined('YII_DEBUG_PROFILING') or define('YII_DEBUG_PROFILING',true);
 } else {
