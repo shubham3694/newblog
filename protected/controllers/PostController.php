@@ -73,6 +73,26 @@ class PostController extends Controller {
 		}
 	}
 
+	public function actionNewsfeedsCached() {
+		$posts = Yii::app()->cache->get('post_newsfeeds');
+		if(!$posts) { //Data not found in cache
+			$posts = Post::model()->active()->findAll(array('order'=>'created_at DESC', 'limit'=>10));
+			if($posts) {
+				Yii::app()->cache->set('post_newsfeeds', $posts, 60);
+			}
+		}
+
+		if(!$posts) {
+			$this->renderError('There is no posts to show');
+		} else {
+			$posts_data = array();
+			foreach ($posts as $post) {
+				$posts_data[] = array('id'=>$post->id, 'content'=>$post->content, 'user_name'=>$post->user->name);				
+			}
+			$this->renderSuccess(array('posts_data'=> $posts_data));
+		}
+	}
+
 
 
 	public function actionSearch($str) {
