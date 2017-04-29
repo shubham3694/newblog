@@ -61,16 +61,23 @@ return array(
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
+				/* array(
+					'class'=>'ext.db_profiler.DbProfileLogRoute',
+					'countLimit' => 1, // How many times the same query should be executed to be considered inefficient
+					'slowQueryMin' => 0.01, // Minimum time for the query to be slow
+				),*/
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'debug,error,warning,trace',
+					'categories' => 'system.*',
+					//'filter' => array('class'=>'CLogFilter', 'prefixSession'=>true, 'prefixUser'=>false, 'logUser'=>false, 'logVars'=>array()),
 				),
 				// uncomment the following to show log messages on web pages
-				/*
 				array(
-					'class'=>'CWebLogRoute',
+					'class' => 'CProfileLogRoute',
+					'enabled' =>YII_DEBUG_SHOW_PROFILER,
+					'categories' => 'system.db.*',
 				),
-				*/
 			),
 		),
 

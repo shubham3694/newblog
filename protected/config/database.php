@@ -8,6 +8,8 @@ return array(
 	'username' => 'root',
 	'password' => 'root',
 	'charset' => 'utf8',
+	'enableProfiling'=>true,
+	'enableParamLogging' => true,
 );
 
 ?>
