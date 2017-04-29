@@ -87,13 +87,27 @@ class PostController extends Controller {
 		} else {
 			$posts_data = array();
 			foreach ($posts as $post) {
-				$posts_data[] = array('id'=>$post->id, 'content'=>$post->content, 'user_name'=>$post->user->name);				
+				$posts_data[] = array('id'=>$post->id, 'content'=>$post->content, 'user_name'=>$post->user->name);
 			}
 			$this->renderSuccess(array('posts_data'=> $posts_data));
 		}
 	}
 
-
+	public function actionNewsfeedsWithReplication() {
+		Yii::app()->params['use_slave'] = true;
+		$posts = Post::model()->active()->findAll(array('order'=>'created_at DESC', 'limit'=>10));
+		Yii::app()->params['use_slave'] = false;
+		if(!$posts) {
+			$this->renderError('There is no posts to show');
+		}
+		else{
+			$posts_data = array();
+			foreach ($posts as $post) {
+				$posts_data[] = array('id'=>$post->id, 'content'=>$post->content, 'user_name'=>$post->user->name);				
+			}
+			$this->renderSuccess(array('posts_data'=> $posts_data));
+		}
+	}
 
 	public function actionSearch($str) {
 		$posts = Post::model()->active()->findAll(array('condition'=> "content LIKE :str", 'params'=> array('str'=>"%$str%")));

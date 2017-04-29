@@ -19,3 +19,13 @@ if(isset($_GET['show_logs'])) {
 
 require_once($yii);
 Yii::createWebApplication($config)->run();
+
+function pick_server($connected, $query, $masters, $slaves, $last_used_connection, $in_transaction) {
+	$ret = $masters[0];
+	$enabled = true;
+	$query_condition = (strpos($query, "USE_SLAVE") !== false || (Yii::app()->params["use_slave"] && (0 === stripos($query, 'SELECT '))));
+	if($enabled && $query_condition) {
+		$ret = $slaves[0];
+	}
+	return $ret;
+}
